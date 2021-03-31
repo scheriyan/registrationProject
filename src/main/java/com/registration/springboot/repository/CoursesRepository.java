@@ -6,5 +6,5 @@ import com.registration.springboot.model.Courses;
 
 @Repository
 public interface CoursesRepository extends JpaRepository<Courses, Long>{
-
+    
 }
