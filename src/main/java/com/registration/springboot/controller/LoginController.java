@@ -24,10 +24,10 @@ public class LoginController {
     }
 
     @GetMapping("/login/{id}")
-    public ResponseEntity<Login> getCoursesById(@PathVariable(value = "id") Long ccsuId)
+    public ResponseEntity<Login> getLoginById(@PathVariable(value = "id") Long ccsuId)
             throws ResourceNotFoundException {
         Login login = loginRepository.findById(ccsuId)
-                .orElseThrow(() -> new ResourceNotFoundException("Course not found for this id :: " + ccsuId));
+                .orElseThrow(() -> new ResourceNotFoundException("Login not found for this id : " + ccsuId));
         return ResponseEntity.ok().body(login);
     }
 
