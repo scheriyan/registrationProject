@@ -1,17 +1,14 @@
 package com.registration.springboot.controller;
 
+import com.registration.springboot.exception.ResourceNotFoundException;
+import com.registration.springboot.model.Login;
+import com.registration.springboot.repository.LoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.registration.springboot.service.LoginService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
-import java.io.IOException;
-import java.util.Map;
-
-;
+import javax.validation.Valid;
+import java.util.List;
 
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -19,13 +16,24 @@ import java.util.Map;
 @RequestMapping("/api/v2")
 public class LoginController {
     @Autowired
-    private LoginService loginService;
+    private LoginRepository loginRepository;
 
     @GetMapping("/login")
-    public Boolean authenticateUser(Map<String, Object> model, @PathParam("uname") String uname, @PathParam("password") String password) throws IOException {
-        System.out.println("username : " + uname + " password : " + password);
-        Boolean response = loginService.authenticateUser(uname, password);
-        model.put("authenticate", response);
-        return response;
+    public List<Login> getAllLoginDetails() {
+        return loginRepository.findAll();
     }
+
+    @GetMapping("/login/{id}")
+    public ResponseEntity<Login> getCoursesById(@PathVariable(value = "id") Long ccsuId)
+            throws ResourceNotFoundException {
+        Login login = loginRepository.findById(ccsuId)
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found for this id :: " + ccsuId));
+        return ResponseEntity.ok().body(login);
+    }
+
+    @PostMapping("/login")
+    public Login createLogin(@Valid @RequestBody Login login) {
+        return loginRepository.save(login);
+    }
+
 }
