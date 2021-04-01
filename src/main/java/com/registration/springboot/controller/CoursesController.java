@@ -8,19 +8,11 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.registration.springboot.exception.ResourceNotFoundException;
 import com.registration.springboot.model.Courses;
-import com.registration.springboot.repository.CoursesRepository;;
+import com.registration.springboot.repository.CoursesRepository;
 
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -37,9 +29,9 @@ public class CoursesController {
 
     @GetMapping("/courses/{id}")
     public ResponseEntity<Courses> getCoursesById(@PathVariable(value = "id") Long coursesId)
-        throws ResourceNotFoundException {
+            throws ResourceNotFoundException {
         Courses courses = coursesRepository.findById(coursesId)
-          .orElseThrow(() -> new ResourceNotFoundException("Course not found for this id :: " + coursesId));
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found for this id :: " + coursesId));
         return ResponseEntity.ok().body(courses);
     }
     
@@ -50,9 +42,9 @@ public class CoursesController {
 
     @PutMapping("/courses/{id}")
     public ResponseEntity<Courses> updateCourses(@PathVariable(value = "id") Long coursesId,
-         @Valid @RequestBody Courses coursesDetails) throws ResourceNotFoundException {
+                                                 @Valid @RequestBody Courses coursesDetails) throws ResourceNotFoundException {
         Courses courses = coursesRepository.findById(coursesId)
-        .orElseThrow(() -> new ResourceNotFoundException("Course not found for this id :: " + coursesId));
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found for this id :: " + coursesId));
 
         courses.setCourseNumber(coursesDetails.getCourseNumber());
         courses.setCourseName(coursesDetails.getCourseName());
@@ -81,3 +73,4 @@ public class CoursesController {
         return response;
     }
 }
+
