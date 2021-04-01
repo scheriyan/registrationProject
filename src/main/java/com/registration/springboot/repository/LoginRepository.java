@@ -1,6 +1,6 @@
 package com.registration.springboot.repository;
 
-import com.registration.springboot.model.Courses;
+
 import com.registration.springboot.model.Login;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
