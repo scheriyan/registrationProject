@@ -1,22 +1,30 @@
 package com.registration.springboot.model;
 
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
 public class Login {
-    private int ccsuId;
+    private long id;
     private String userName;
     private String password;
 
+    public Login (){
+
+    }
+
+    public Login(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public long getCcsuId() {
-        return ccsuId;
+    public long getId() {
+        return id;
     }
-    public void setCcsuId(long id) {
-        this.ccsuId = ccsuId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Column(name = "username", nullable = false)
@@ -31,4 +39,12 @@ public class Login {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "Login{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
